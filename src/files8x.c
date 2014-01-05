@@ -548,7 +548,9 @@ int ti8x_file_read_flash(const char *filename, Ti8xFlash *head)
 			content->pages = NULL;
 
 			// we should determine the number of pages, to do...
-			content->pages = g_malloc0((50+1) * sizeof(Ti8xFlashPage *));
+			//there could be more than 50 pages, but there should never be more than 256 pages
+			//if there was a bigger app then 50 pages, the overflow would break things
+			content->pages = g_malloc0((256+1) * sizeof(Ti8xFlashPage *));
 			if (content->pages == NULL)
 			{
 				return ERR_MALLOC;
